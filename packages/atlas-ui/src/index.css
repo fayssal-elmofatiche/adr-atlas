@@ -1,0 +1,15 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme {
+  --color-status-accepted: #16a34a;
+  --color-status-proposed: #ca8a04;
+  --color-status-rejected: #dc2626;
+  --color-status-deprecated: #6b7280;
+  --color-status-superseded: #9333ea;
+
+  --color-edge-supersedes: #dc2626;
+  --color-edge-depends-on: #2563eb;
+  --color-edge-relates-to: #6b7280;
+  --color-edge-conflicts-with: #ea580c;
+}
