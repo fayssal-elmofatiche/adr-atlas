@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm";
+import { eq, inArray } from "drizzle-orm";
 import type { AtlasDb } from "./connection.js";
 import { adrs, tags, adrTags, components, adrComponents, adrEdges } from "./schema.js";
 import type { AdrGraph } from "../types.js";
@@ -86,7 +86,12 @@ export async function seedDatabase(db: AtlasDb, graph: AdrGraph): Promise<void> 
     }
   }
 
-  // 4. Insert edges
+  // 4. Delete old edges for re-ingested ADRs, then insert fresh edges
+  const dbIds = [...nodeToDbId.values()];
+  if (dbIds.length > 0) {
+    await db.delete(adrEdges).where(inArray(adrEdges.sourceAdrId, dbIds));
+  }
+
   for (const edge of graph.edges) {
     const sourceDbId = nodeToDbId.get(edge.sourceId);
     const targetDbId = nodeToDbId.get(edge.targetId);
@@ -96,7 +101,7 @@ export async function seedDatabase(db: AtlasDb, graph: AdrGraph): Promise<void> 
         sourceAdrId: sourceDbId,
         targetAdrId: targetDbId,
         type: edge.type,
-      });
+      }).onConflictDoNothing();
     }
   }
 }

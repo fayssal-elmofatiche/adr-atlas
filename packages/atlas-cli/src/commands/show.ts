@@ -2,11 +2,12 @@ import { Command } from "commander";
 import chalk from "chalk";
 import { createMigratedDb, getAdrById } from "@atlas/parser/db";
 import { resolvePath } from "../resolve-path.js";
+import { paths } from "../paths.js";
 
 export const showCommand = new Command("show")
   .description("Display detailed information about an ADR")
   .argument("<id>", "ADR ID")
-  .option("-d, --db <path>", "SQLite database file path", "atlas.db")
+  .option("-d, --db <path>", "SQLite database file path", paths.db)
   .action(async (idStr: string, opts) => {
     try {
       const id = parseInt(idStr, 10);

@@ -2,10 +2,11 @@ import { Command } from "commander";
 import chalk from "chalk";
 import { createMigratedDb, getGraph } from "@atlas/parser/db";
 import { resolvePath } from "../resolve-path.js";
+import { paths } from "../paths.js";
 
 export const graphCommand = new Command("graph")
   .description("Display a summary of the ADR graph")
-  .option("-d, --db <path>", "SQLite database file path", "atlas.db")
+  .option("-d, --db <path>", "SQLite database file path", paths.db)
   .option("-s, --status <status>", "filter by status")
   .action(async (opts) => {
     try {

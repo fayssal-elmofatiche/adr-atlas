@@ -2,7 +2,7 @@
   "name": "adr-atlas",
   "private": true,
   "scripts": {
-    "build": "pnpm -r build",
+    "build": "pnpm -r build && cp -r packages/atlas-ui/dist packages/atlas-cli/dist/ui",
     "test": "pnpm -r test",
     "typecheck": "pnpm -r typecheck"
   },

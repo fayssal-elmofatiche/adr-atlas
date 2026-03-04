@@ -10,6 +10,7 @@
       "types": "./dist/app.d.ts"
     }
   },
+  "files": ["dist"],
   "scripts": {
     "build": "tsc",
     "start": "node dist/main.js",

@@ -5,6 +5,7 @@
   "bin": {
     "atlas": "./dist/main.js"
   },
+  "files": ["dist"],
   "scripts": {
     "build": "tsc",
     "dev": "tsx src/main.ts",
@@ -15,9 +16,12 @@
     "@atlas/server": "workspace:*",
     "chalk": "^5.4.0",
     "cli-table3": "^0.6.0",
-    "commander": "^13.0.0"
+    "commander": "^13.0.0",
+    "express": "^5.1.0",
+    "simple-git": "^3.32.3"
   },
   "devDependencies": {
+    "@types/express": "^5.0.0",
     "@types/node": "^22.0.0",
     "tsx": "^4.0.0",
     "typescript": "^5.7.0"

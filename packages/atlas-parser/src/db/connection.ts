@@ -87,6 +87,7 @@ const MIGRATION_SQL = `
     target_adr_id INTEGER NOT NULL REFERENCES adr(id) ON DELETE CASCADE,
     type TEXT NOT NULL
   );
+  CREATE UNIQUE INDEX IF NOT EXISTS uq_adr_edge ON adr_edge(source_adr_id, target_adr_id, type);
 `;
 
 async function runMigrationSql(client: Client) {

@@ -60,13 +60,17 @@ export const adrComponents = sqliteTable(
   (table) => [uniqueIndex("uq_adr_component").on(table.adrId, table.componentId)],
 );
 
-export const adrEdges = sqliteTable("adr_edge", {
-  id: integer("id").primaryKey({ autoIncrement: true }),
-  sourceAdrId: integer("source_adr_id")
-    .notNull()
-    .references(() => adrs.id, { onDelete: "cascade" }),
-  targetAdrId: integer("target_adr_id")
-    .notNull()
-    .references(() => adrs.id, { onDelete: "cascade" }),
-  type: text("type").notNull(), // 'supersedes' | 'relates_to' | 'depends_on' | 'conflicts_with'
-});
+export const adrEdges = sqliteTable(
+  "adr_edge",
+  {
+    id: integer("id").primaryKey({ autoIncrement: true }),
+    sourceAdrId: integer("source_adr_id")
+      .notNull()
+      .references(() => adrs.id, { onDelete: "cascade" }),
+    targetAdrId: integer("target_adr_id")
+      .notNull()
+      .references(() => adrs.id, { onDelete: "cascade" }),
+    type: text("type").notNull(), // 'supersedes' | 'relates_to' | 'depends_on' | 'conflicts_with'
+  },
+  (table) => [uniqueIndex("uq_adr_edge").on(table.sourceAdrId, table.targetAdrId, table.type)],
+);

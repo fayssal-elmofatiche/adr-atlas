@@ -3,10 +3,11 @@ import chalk from "chalk";
 import Table from "cli-table3";
 import { createMigratedDb, getAdrs } from "@atlas/parser/db";
 import { resolvePath } from "../resolve-path.js";
+import { paths } from "../paths.js";
 
 export const listCommand = new Command("list")
   .description("List ADRs from the database")
-  .option("-d, --db <path>", "SQLite database file path", "atlas.db")
+  .option("-d, --db <path>", "SQLite database file path", paths.db)
   .option("-s, --status <status>", "filter by status")
   .option("-t, --tag <tag>", "filter by tag")
   .option("-c, --component <name>", "filter by component")
