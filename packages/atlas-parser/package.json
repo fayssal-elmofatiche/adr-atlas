@@ -8,6 +8,10 @@
     ".": {
       "import": "./dist/index.js",
       "types": "./dist/index.d.ts"
+    },
+    "./db": {
+      "import": "./dist/db/index.js",
+      "types": "./dist/db/index.d.ts"
     }
   },
   "scripts": {
@@ -17,6 +21,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@libsql/client": "^0.14.0",
+    "drizzle-orm": "^0.44.0",
     "fast-glob": "^3.3.0",
     "gray-matter": "^4.0.3"
   },

@@ -32,6 +32,10 @@ export type { ScanOptions } from "./scanner.js";
 export { buildGraph } from "./graph-builder.js";
 export type { GraphInput } from "./graph-builder.js";
 
+// Ingestion pipeline
+export { ingestRepository } from "./ingest.js";
+export type { IngestOptions, IngestResult } from "./ingest.js";
+
 // Sub-modules (for advanced usage)
 export { extractFrontmatter } from "./frontmatter.js";
 export { extractSections } from "./sections.js";
