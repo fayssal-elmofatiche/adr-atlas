@@ -47,7 +47,7 @@ export const serveCommand = new Command("serve")
         });
       }
 
-      app.listen(port, () => {
+      app.listen(port, async () => {
         console.log(chalk.green(`Atlas server listening on http://localhost:${port}`));
         console.log(chalk.gray(`Database: ${dbPath}`));
         if (uiDist) {
@@ -56,6 +56,10 @@ export const serveCommand = new Command("serve")
           console.log(chalk.gray("UI not found (run 'pnpm build' to include the web UI)"));
         }
         console.log(chalk.gray("Press Ctrl+C to stop"));
+
+        // Start background auto-sync for repositories with auto_sync enabled
+        const { startAutoSync } = await import("@atlas/server/sync");
+        startAutoSync();
       });
     } catch (err) {
       console.error(chalk.red(`Server failed to start: ${(err as Error).message}`));

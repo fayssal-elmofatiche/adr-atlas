@@ -41,3 +41,10 @@ export { extractFrontmatter } from "./frontmatter.js";
 export { extractSections } from "./sections.js";
 export { resolveMetadata } from "./metadata.js";
 export { detectRelationships } from "./relationships.js";
+
+// Git utilities
+export { isGitUrl, repoSlugFromUrl, cloneOrPull, pullAndDetectChanges } from "./git.js";
+export type { CloneOrPullResult } from "./git.js";
+
+// Paths
+export { paths, ensureAtlasDirs } from "./paths.js";

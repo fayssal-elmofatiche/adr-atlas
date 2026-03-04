@@ -4,6 +4,7 @@ import { SearchBar } from "../components/ui/SearchBar";
 const navItems = [
   { to: "/", label: "ADRs" },
   { to: "/graph", label: "Graph" },
+  { to: "/sources", label: "Sources" },
 ];
 
 export function AppLayout() {

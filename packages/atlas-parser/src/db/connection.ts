@@ -88,6 +88,24 @@ const MIGRATION_SQL = `
     type TEXT NOT NULL
   );
   CREATE UNIQUE INDEX IF NOT EXISTS uq_adr_edge ON adr_edge(source_adr_id, target_adr_id, type);
+
+  CREATE TABLE IF NOT EXISTS repository (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    slug TEXT NOT NULL,
+    source_url TEXT,
+    local_path TEXT NOT NULL,
+    source_type TEXT NOT NULL DEFAULT 'git',
+    scan_paths TEXT,
+    status TEXT NOT NULL DEFAULT 'pending',
+    error_message TEXT,
+    adr_count INTEGER DEFAULT 0,
+    auto_sync INTEGER DEFAULT 0,
+    sync_interval_seconds INTEGER DEFAULT 300,
+    last_synced_at TEXT,
+    created_at TEXT DEFAULT (datetime('now')),
+    updated_at TEXT DEFAULT (datetime('now'))
+  );
+  CREATE UNIQUE INDEX IF NOT EXISTS uq_repository_slug ON repository(slug);
 `;
 
 async function runMigrationSql(client: Client) {

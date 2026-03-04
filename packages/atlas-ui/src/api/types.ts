@@ -58,3 +58,19 @@ export interface AdrFilter {
   tag?: string;
   component?: string;
 }
+
+export interface Repository {
+  id: number;
+  slug: string;
+  sourceUrl: string | null;
+  localPath: string;
+  sourceType: "git" | "local";
+  scanPaths: string[];
+  status: "pending" | "syncing" | "ready" | "error";
+  errorMessage: string | null;
+  adrCount: number;
+  autoSync: boolean;
+  syncIntervalSeconds: number;
+  lastSyncedAt: string | null;
+  createdAt: string | null;
+}

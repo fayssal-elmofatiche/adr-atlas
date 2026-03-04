@@ -8,6 +8,10 @@
     "./app": {
       "import": "./dist/app.js",
       "types": "./dist/app.d.ts"
+    },
+    "./sync": {
+      "import": "./dist/repository/sync-manager.js",
+      "types": "./dist/repository/sync-manager.d.ts"
     }
   },
   "files": ["dist"],

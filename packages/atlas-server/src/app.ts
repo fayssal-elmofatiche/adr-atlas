@@ -4,6 +4,7 @@ import { adrRouter } from "./adr/routes.js";
 import { graphRouter } from "./graph/routes.js";
 import { componentRouter } from "./component/routes.js";
 import { ingestionRouter } from "./ingestion/routes.js";
+import { repositoryRouter } from "./repository/routes.js";
 
 export function createApp() {
   const app = express();
@@ -15,6 +16,7 @@ export function createApp() {
   app.use("/api/graph", graphRouter);
   app.use("/api/components", componentRouter);
   app.use("/api/ingest", ingestionRouter);
+  app.use("/api/repositories", repositoryRouter);
 
   app.get("/api/health", (_req, res) => {
     res.json({ status: "ok" });

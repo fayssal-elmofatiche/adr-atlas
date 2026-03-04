@@ -41,9 +41,10 @@ COPY --from=build /app/packages/atlas-cli/dist packages/atlas-cli/dist
 COPY examples/ examples/
 
 ENV NODE_ENV=production
+ENV ATLAS_HOME=/data
 EXPOSE 3000
 
-VOLUME ["/root/.atlas"]
+VOLUME ["/data"]
 
 ENTRYPOINT ["node", "packages/atlas-cli/dist/main.js"]
 CMD ["serve"]

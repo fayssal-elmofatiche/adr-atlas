@@ -1,5 +1,7 @@
 import { useState, useMemo } from "react";
+import { Link } from "react-router-dom";
 import { useAdrs } from "../hooks/use-adrs";
+import { useRepositories } from "../hooks/use-repositories";
 import { AdrTable } from "../components/adr/AdrTable";
 import { AdrFilters } from "../components/adr/AdrFilters";
 import { LoadingSpinner } from "../components/ui/LoadingSpinner";
@@ -29,7 +31,31 @@ export function AdrListPage() {
         <span className="text-sm text-gray-500">{adrs?.length ?? 0} ADRs</span>
       </div>
       <AdrFilters filters={filters} onChange={setFilters} statuses={statuses} tags={tags} components={components} />
-      {adrs && adrs.length > 0 ? <AdrTable adrs={adrs} /> : <EmptyState message="No ADRs found" />}
+      {adrs && adrs.length > 0 ? <AdrTable adrs={adrs} /> : <OnboardingOrEmpty />}
+    </div>
+  );
+}
+
+function OnboardingOrEmpty() {
+  const { data: repos } = useRepositories();
+  const hasRepos = repos && repos.length > 0;
+
+  if (hasRepos) {
+    return <EmptyState message="No ADRs match your filters." />;
+  }
+
+  return (
+    <div className="rounded-lg border border-dashed border-gray-300 p-12 text-center">
+      <h2 className="text-lg font-medium text-gray-900">Welcome to ADR Atlas</h2>
+      <p className="mt-2 text-sm text-gray-500">
+        Get started by adding a repository source to ingest ADRs from.
+      </p>
+      <Link
+        to="/sources"
+        className="mt-4 inline-block rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+      >
+        Add Source
+      </Link>
     </div>
   );
 }

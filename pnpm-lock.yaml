@@ -32,9 +32,6 @@ importers:
       express:
         specifier: ^5.1.0
         version: 5.2.1
-      simple-git:
-        specifier: ^3.32.3
-        version: 3.32.3
     devDependencies:
       '@types/express':
         specifier: ^5.0.0
@@ -63,6 +60,9 @@ importers:
       gray-matter:
         specifier: ^4.0.3
         version: 4.0.3
+      simple-git:
+        specifier: ^3.32.3
+        version: 3.32.3
     devDependencies:
       '@types/node':
         specifier: ^22.0.0

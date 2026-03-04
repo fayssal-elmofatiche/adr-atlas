@@ -131,19 +131,23 @@ Inverse relationships (`superseded_by`, `depended_on_by`) are derived at query t
 ## Docker
 
 ```bash
-# Build the image
+# Start with Docker Compose
+docker compose up
+
+# Or build and run manually
 docker build -t adr-atlas .
-
-# Ingest from a git repo and start the server
-docker run -p 3000:3000 -v atlas-data:/root/.atlas adr-atlas ingest https://github.com/your-org/your-repo
-docker run -p 3000:3000 -v atlas-data:/root/.atlas adr-atlas serve
-
-# Try with the bundled sample ADRs
-docker run -p 3000:3000 adr-atlas ingest ./examples/sample-repo
-docker run -p 3000:3000 adr-atlas serve
+docker run -p 3000:3000 -v atlas-data:/data adr-atlas
 ```
 
-The `atlas-data` named volume persists the database and cloned repos across container runs.
+Open http://localhost:3000, navigate to **Sources**, and add a git URL or local path. No CLI needed.
+
+To ingest from a local repo, mount it as a volume:
+
+```bash
+docker run -p 3000:3000 -v atlas-data:/data -v /path/to/repo:/repos/my-repo:ro adr-atlas
+```
+
+Then add `/repos/my-repo` as a local source in the UI.
 
 ## Development
 

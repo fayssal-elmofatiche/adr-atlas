@@ -1,0 +1,13 @@
+services:
+  atlas:
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - atlas-data:/data
+      # Mount local repos for ingestion (uncomment and adjust):
+      # - /path/to/your/repo:/repos/my-repo:ro
+    restart: unless-stopped
+
+volumes:
+  atlas-data:

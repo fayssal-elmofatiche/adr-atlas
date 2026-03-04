@@ -25,7 +25,8 @@
     "@libsql/client": "^0.14.0",
     "drizzle-orm": "^0.44.0",
     "fast-glob": "^3.3.0",
-    "gray-matter": "^4.0.3"
+    "gray-matter": "^4.0.3",
+    "simple-git": "^3.32.3"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",

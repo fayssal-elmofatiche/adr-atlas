@@ -60,6 +60,27 @@ export const adrComponents = sqliteTable(
   (table) => [uniqueIndex("uq_adr_component").on(table.adrId, table.componentId)],
 );
 
+export const repositories = sqliteTable(
+  "repository",
+  {
+    id: integer("id").primaryKey({ autoIncrement: true }),
+    slug: text("slug").notNull(),
+    sourceUrl: text("source_url"),
+    localPath: text("local_path").notNull(),
+    sourceType: text("source_type").notNull(), // 'git' | 'local'
+    scanPaths: text("scan_paths"), // JSON array stored as text
+    status: text("status").notNull().default("pending"),
+    errorMessage: text("error_message"),
+    adrCount: integer("adr_count").default(0),
+    autoSync: integer("auto_sync", { mode: "boolean" }).default(false),
+    syncIntervalSeconds: integer("sync_interval_seconds").default(300),
+    lastSyncedAt: text("last_synced_at"),
+    createdAt: text("created_at").default(sql`(datetime('now'))`),
+    updatedAt: text("updated_at").default(sql`(datetime('now'))`),
+  },
+  (table) => [uniqueIndex("uq_repository_slug").on(table.slug)],
+);
+
 export const adrEdges = sqliteTable(
   "adr_edge",
   {

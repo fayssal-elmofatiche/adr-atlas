@@ -19,3 +19,12 @@ export type {
   GraphEdge,
   GraphData,
 } from "./queries.js";
+export {
+  getRepositories,
+  getRepositoryById,
+  getRepositoryBySlug,
+  insertRepository,
+  updateRepositoryStatus,
+  deleteRepositoryAndAdrs,
+} from "./repository-queries.js";
+export type { RepositoryRow } from "./repository-queries.js";

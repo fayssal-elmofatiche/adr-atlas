@@ -4,6 +4,7 @@ import { AdrListPage } from "./pages/AdrListPage";
 import { AdrDetailPage } from "./pages/AdrDetailPage";
 import { GraphPage } from "./pages/GraphPage";
 import { SearchPage } from "./pages/SearchPage";
+import { RepositoriesPage } from "./pages/RepositoriesPage";
 
 export const router = createBrowserRouter([
   {
@@ -13,6 +14,7 @@ export const router = createBrowserRouter([
       { path: "adrs/:id", element: <AdrDetailPage /> },
       { path: "graph", element: <GraphPage /> },
       { path: "search", element: <SearchPage /> },
+      { path: "sources", element: <RepositoriesPage /> },
     ],
   },
 ]);
