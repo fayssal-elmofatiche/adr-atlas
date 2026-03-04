@@ -1,13 +1,15 @@
 import { Command } from "commander";
 import chalk from "chalk";
+import { resolvePath } from "../resolve-path.js";
 
 export const serveCommand = new Command("serve")
   .description("Start the Atlas API server")
   .option("-p, --port <port>", "port to listen on", "3000")
   .option("-d, --db <path>", "SQLite database file path", "atlas.db")
   .action(async (opts) => {
+    const dbPath = resolvePath(opts.db);
     process.env.PORT = opts.port;
-    process.env.DATABASE_PATH = opts.db;
+    process.env.DATABASE_PATH = dbPath;
 
     try {
       // Dynamic import to avoid loading express unless needed

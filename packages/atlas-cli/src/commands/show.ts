@@ -1,6 +1,7 @@
 import { Command } from "commander";
 import chalk from "chalk";
 import { createMigratedDb, getAdrById } from "@atlas/parser/db";
+import { resolvePath } from "../resolve-path.js";
 
 export const showCommand = new Command("show")
   .description("Display detailed information about an ADR")
@@ -14,7 +15,7 @@ export const showCommand = new Command("show")
         process.exit(1);
       }
 
-      const db = await createMigratedDb(opts.db);
+      const db = await createMigratedDb(resolvePath(opts.db));
       const adr = await getAdrById(db, id);
 
       if (!adr) {

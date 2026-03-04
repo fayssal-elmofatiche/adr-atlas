@@ -2,6 +2,7 @@ import { Command } from "commander";
 import chalk from "chalk";
 import Table from "cli-table3";
 import { createMigratedDb, getAdrs } from "@atlas/parser/db";
+import { resolvePath } from "../resolve-path.js";
 
 export const listCommand = new Command("list")
   .description("List ADRs from the database")
@@ -11,7 +12,7 @@ export const listCommand = new Command("list")
   .option("-c, --component <name>", "filter by component")
   .action(async (opts) => {
     try {
-      const db = await createMigratedDb(opts.db);
+      const db = await createMigratedDb(resolvePath(opts.db));
 
       const filters: Record<string, string> = {};
       if (opts.status) filters.status = opts.status;

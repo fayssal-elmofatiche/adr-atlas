@@ -8,14 +8,20 @@ function drizzleFromClient(client: Client) {
   return drizzle(client, { schema });
 }
 
+function toLibsqlUrl(dbPath: string): string {
+  if (dbPath === ":memory:") return ":memory:";
+  // Absolute paths need file:// prefix, relative paths use file:
+  if (dbPath.startsWith("/")) return `file:${dbPath}`;
+  return `file:${dbPath}`;
+}
+
 /**
  * Creates a Drizzle ORM database connection backed by libSQL/SQLite.
  * Pass ":memory:" for an in-memory database (useful for tests),
  * or a file path for a file-based database.
  */
 export function createDb(dbPath: string) {
-  const url = dbPath === ":memory:" ? ":memory:" : `file:${dbPath}`;
-  const client = createClient({ url });
+  const client = createClient({ url: toLibsqlUrl(dbPath) });
   return drizzleFromClient(client);
 }
 
@@ -24,8 +30,7 @@ export function createDb(dbPath: string) {
  * Essential for in-memory databases where each connection is isolated.
  */
 export async function createMigratedDb(dbPath: string) {
-  const url = dbPath === ":memory:" ? ":memory:" : `file:${dbPath}`;
-  const client = createClient({ url });
+  const client = createClient({ url: toLibsqlUrl(dbPath) });
 
   // Run migrations on this client
   await runMigrationSql(client);
@@ -100,8 +105,7 @@ async function runMigrationSql(client: Client) {
  * use createMigratedDb() instead.
  */
 export async function migrateDb(dbPath: string) {
-  const url = dbPath === ":memory:" ? ":memory:" : `file:${dbPath}`;
-  const client = createClient({ url });
+  const client = createClient({ url: toLibsqlUrl(dbPath) });
   await runMigrationSql(client);
   client.close();
 }

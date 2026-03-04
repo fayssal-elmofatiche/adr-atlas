@@ -10,7 +10,8 @@ import { serveCommand } from "./commands/serve.js";
 program
   .name("atlas")
   .description("ADR Atlas — Architecture Decision Record knowledge graph")
-  .version("0.1.0");
+  .version("0.1.0")
+  .enablePositionalOptions();
 
 program.addCommand(scanCommand);
 program.addCommand(ingestCommand);
@@ -19,4 +20,7 @@ program.addCommand(showCommand);
 program.addCommand(graphCommand);
 program.addCommand(serveCommand);
 
-program.parse();
+// pnpm --filter passes "--" as a literal argument; strip it so commander
+// can parse the subcommand and its options correctly.
+const argv = process.argv.filter((a, i) => !(a === "--" && i === 2));
+program.parse(argv);

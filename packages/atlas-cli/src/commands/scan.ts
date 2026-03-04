@@ -1,17 +1,18 @@
 import { Command } from "commander";
 import chalk from "chalk";
 import { scanForAdrs } from "@atlas/parser";
+import { resolvePath } from "../resolve-path.js";
 
 export const scanCommand = new Command("scan")
   .description("Discover ADR files in given directories")
   .argument("[paths...]", "directories to scan (defaults to standard ADR paths)")
-  .option("-b, --base-path <path>", "base path to resolve directories against", process.cwd())
+  .option("-b, --base-path <path>", "base path to resolve directories against", ".")
   .option("-r, --repo <name>", "repository identifier", "default")
   .action(async (paths: string[], opts) => {
     try {
       const results = await scanForAdrs({
         paths: paths.length > 0 ? paths : undefined,
-        basePath: opts.basePath,
+        basePath: resolvePath(opts.basePath),
         repository: opts.repo,
       });
 

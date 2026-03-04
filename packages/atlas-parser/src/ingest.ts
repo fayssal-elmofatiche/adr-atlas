@@ -1,7 +1,7 @@
 import { scanForAdrs } from "./scanner.js";
 import { parseAdr } from "./parse-adr.js";
 import { buildGraph } from "./graph-builder.js";
-import { createDb, migrateDb } from "./db/connection.js";
+import { createMigratedDb } from "./db/connection.js";
 import { seedDatabase } from "./db/seed.js";
 import type { GraphWarning } from "./types.js";
 
@@ -28,27 +28,24 @@ export interface IngestResult {
 export async function ingestRepository(options: IngestOptions): Promise<IngestResult> {
   const { paths, basePath, repository, dbPath } = options;
 
-  // 1. Ensure database schema exists
-  await migrateDb(dbPath);
-
-  // 2. Scan for ADR files
+  // 1. Scan for ADR files
   const scanResults = await scanForAdrs({
     paths: paths.length > 0 ? paths : undefined,
     basePath,
     repository,
   });
 
-  // 3. Parse each file
+  // 2. Parse each file
   const graphInputs = scanResults.map((sr) => ({
     adr: parseAdr(sr.rawContent, sr.filePath),
     repository: sr.repository,
   }));
 
-  // 4. Build graph
+  // 3. Build graph
   const graph = buildGraph(graphInputs);
 
-  // 5. Persist to database
-  const db = createDb(dbPath);
+  // 4. Create database (with migrations) and persist
+  const db = await createMigratedDb(dbPath);
   await seedDatabase(db, graph);
 
   return {

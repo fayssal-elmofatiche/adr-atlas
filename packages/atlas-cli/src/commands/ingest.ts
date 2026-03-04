@@ -1,11 +1,12 @@
 import { Command } from "commander";
 import chalk from "chalk";
 import { ingestRepository } from "@atlas/parser";
+import { resolvePath } from "../resolve-path.js";
 
 export const ingestCommand = new Command("ingest")
   .description("Scan, parse, and persist ADRs to the database")
   .argument("[paths...]", "directories to scan (defaults to standard ADR paths)")
-  .option("-b, --base-path <path>", "base path to resolve directories against", process.cwd())
+  .option("-b, --base-path <path>", "base path to resolve directories against", ".")
   .option("-r, --repo <name>", "repository identifier", "default")
   .option("-d, --db <path>", "SQLite database file path", "atlas.db")
   .action(async (paths: string[], opts) => {
@@ -14,9 +15,9 @@ export const ingestCommand = new Command("ingest")
 
       const result = await ingestRepository({
         paths: Array.isArray(paths) ? paths : [],
-        basePath: opts.basePath,
+        basePath: resolvePath(opts.basePath),
         repository: opts.repo,
-        dbPath: opts.db,
+        dbPath: resolvePath(opts.db),
       });
 
       console.log(chalk.green(`\nIngestion complete:`));

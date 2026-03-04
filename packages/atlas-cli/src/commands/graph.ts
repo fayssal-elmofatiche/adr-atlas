@@ -1,6 +1,7 @@
 import { Command } from "commander";
 import chalk from "chalk";
 import { createMigratedDb, getGraph } from "@atlas/parser/db";
+import { resolvePath } from "../resolve-path.js";
 
 export const graphCommand = new Command("graph")
   .description("Display a summary of the ADR graph")
@@ -8,7 +9,7 @@ export const graphCommand = new Command("graph")
   .option("-s, --status <status>", "filter by status")
   .action(async (opts) => {
     try {
-      const db = await createMigratedDb(opts.db);
+      const db = await createMigratedDb(resolvePath(opts.db));
 
       const filters = opts.status ? { status: opts.status } : undefined;
       const graph = await getGraph(db, filters);
