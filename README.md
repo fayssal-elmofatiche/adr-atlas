@@ -128,6 +128,23 @@ Inverse relationships (`superseded_by`, `depended_on_by`) are derived at query t
 - **CLI**: Commander, chalk, cli-table3, simple-git
 - **Testing**: Vitest (72 tests)
 
+## Docker
+
+```bash
+# Build the image
+docker build -t adr-atlas .
+
+# Ingest from a git repo and start the server
+docker run -p 3000:3000 -v atlas-data:/root/.atlas adr-atlas ingest https://github.com/your-org/your-repo
+docker run -p 3000:3000 -v atlas-data:/root/.atlas adr-atlas serve
+
+# Try with the bundled sample ADRs
+docker run -p 3000:3000 adr-atlas ingest ./examples/sample-repo
+docker run -p 3000:3000 adr-atlas serve
+```
+
+The `atlas-data` named volume persists the database and cloned repos across container runs.
+
 ## Development
 
 ```bash
